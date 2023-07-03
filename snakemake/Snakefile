@@ -1,15 +1,21 @@
 # Snakefile that does the following:
 # runs python3 ./app.py 10 times
 
+        
+results = "output_{i}.txt"
+
+all_results = expand(results, i = [x for x in range(10)] )
+
 rule all:
     input:
-        expand("output_{i}.txt", i=range(10))
+        all_results
+    run:
+        print(all_results)
 
 rule run_app:
-    output:
+  input:
+  output:
         "output_{i}.txt"
-    shell:
-        "python ../app.py > output_{wildcards.i}.txt"
-        
-
+  shell:
+        "python3 ../app.py  > {output}"
 
